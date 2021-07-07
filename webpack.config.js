@@ -2,11 +2,22 @@ const path = require('path');
 
 module.exports = {
 	entry: './client/index.js',
-	target: 'node',
-	mode: 'production',
+
+	target: 'web',
+
+	mode: 'development',
+
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		filename: 'bundle.js',
+		publicPath: '/',
+	},
+
+	devServer: {
+		contentBase: path.join(__dirname, 'dist'),
+		compress: true,
+		hot: true,
+		port: 8080,
 	},
 
 	module: {
