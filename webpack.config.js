@@ -1,41 +1,46 @@
 const path = require('path');
 
-module.exports = {
-	entry: './client/index.js',
+module.exports = (env) => {
+	const isProduction = env.production ? true : false;
+	const mode = isProduction ? 'production' : 'development';
 
-	target: 'web',
+	return {
+		entry: './client/index.js',
 
-	mode: 'development',
+		target: 'web',
 
-	output: {
-		path: path.resolve(__dirname, 'dist'),
-		filename: 'bundle.js',
-		publicPath: '/',
-	},
+		mode,
 
-	devServer: {
-		contentBase: path.join(__dirname, 'dist'),
-		compress: true,
-		hot: true,
-		port: 8080,
-	},
+		output: {
+			path: path.resolve(__dirname, 'dist'),
+			filename: 'bundle.js',
+			publicPath: '/',
+		},
 
-	module: {
-		rules: [
-			{
-				test: /\.jsx?/,
-				exclude: /nodeModules/,
-				use: {
-					loader: 'babel-loader',
-					options: {
-						presets: ['@babel/preset-env', '@babel/preset-react'],
+		devServer: {
+			contentBase: path.join(__dirname, 'dist'),
+			compress: true,
+			hot: true,
+			port: 8080,
+		},
+
+		module: {
+			rules: [
+				{
+					test: /\.jsx?/,
+					exclude: /nodeModules/,
+					use: {
+						loader: 'babel-loader',
+						options: {
+							presets: ['@babel/preset-env', '@babel/preset-react'],
+						},
 					},
 				},
-			},
-			{
-				test: /\.css$/,
-				use: ['style-loader', 'css-loader'],
-			},
-		],
-	},
+				{
+					test: /\.css$/,
+					use: ['style-loader', 'css-loader'],
+				},
+			],
+		},
+	};
 };
