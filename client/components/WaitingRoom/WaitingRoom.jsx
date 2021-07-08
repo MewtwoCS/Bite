@@ -1,42 +1,69 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, {
+  useEffect, useContext, useCallback, useState,
+} from 'react';
 import { useHistory } from 'react-router-dom';
 import { AppContext } from '../../AppContext';
-import { io } from 'socket.io-client';
-
+import { SocketContext } from '../../SocketContext';
 // ADD LOGIC TO BUTTON?
 
 const WaitingRoom = () => {
+  const history = useHistory();
+  const [usersName, setUsersName] = useState([]);
+
+  const [joined, setJoined] = useState(false);
   const {
-    setLocation,
-    setRoomName,
+    // setLocation,
+    // setRoomN,
     setRestData,
     location,
-    roomName,
+    roomId,
     restData,
+    usernameVal,
   } = useContext(AppContext);
+  const socket = useContext(SocketContext);
 
-  const handleClick = () => {
-    fetch('http://localhost:5000/yelp')
+  const handleInviteAccepted = useCallback(() => {
+    setJoined(true);
+  }, []);
+
+  socket.on('roomData', (users) => {
+    setUsersName(users);
+  });
+
+  useEffect(() => {
+    fetch('http://localhost:5000/yelp/Koreatown')
       .then((res) => res.json())
       .then((data) => {
         console.log('resJSON', data);
         setRestData(data);
+        console.log(restData);
       });
 
-    const socket = io('http://localhost:5001');
-    socket.on('connect', () => {
-      console.log(`Socket ${socket.id} connected`);
-      socket.emit('send-restaruants', 'Biergarten');
-    });
+    socket.emit('create', socket.id, usernameVal, 'room'.concat(` ${roomId}`));
+    socket.on('begin-game', () => {
+      history.push('/game');
+    })
+    return () => {
+      socket.off('server->client', handleInviteAccepted);
+    };
+  }, [socket, handleInviteAccepted]);
 
-    history.push('/game');
+  const handleClick = () => {
+    socket.emit('start-game', 'room'.concat(` ${roomId}`));
+
+
+    setTimeout(() => history.push('/game'), 1000);
   };
+
+  const renderUsersName = [];
+  for (let i = 0; i < usersName.length; i++) {
+    renderUsersName.push(<div>{usersName[i].username}</div>);
+  }
 
   return (
     <div id="waiting-container">
-      <div className="waiting-room-pane">User1</div>
-      <div className="waiting-room-pane">User2</div>
-      <div className="waiting-room-pane">User3</div>
+      <div>{location}</div>
+      {renderUsersName}
 
       <button id="start-vote" onClick={handleClick}>
         Start
