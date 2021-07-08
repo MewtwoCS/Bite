@@ -3,7 +3,7 @@ const router = express.Router();
 
 const yelpController = require('../controllers/yelpController');
 
-router.get('/', yelpController.getRestaurants, (req, res) => {
+router.get('/:location', yelpController.getRestaurants, (req, res) => {
   res.status(200).json(res.locals.kyung);
 });
 
