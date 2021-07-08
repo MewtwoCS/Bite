@@ -10,6 +10,9 @@ socket.init = (PORT) => {
 
   io.on('connection', (socket) => {
     console.log('SOCKET.IO --> ' + socket.id + ': connected');
+    socket.on('send-restaurants', (restaurants) => {
+      console.log('restaurants', restaurants);
+    });
   });
 };
 

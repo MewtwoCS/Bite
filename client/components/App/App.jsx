@@ -1,25 +1,42 @@
-import React from 'react';
-import { io } from 'socket.io-client';
+import React, { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
+import { AppContext } from '../../AppContext';
 
 import Login from '../Login/Login.jsx';
 import MainMenu from '../MainMenu/MainMenu.jsx';
 import CreateRoom from '../CreateRoom/CreateRoom.jsx';
 import PrevRounds from '../PrevRounds/PrevRounds.jsx';
 import WaitingRoom from '../WaitingRoom/WaitingRoom.jsx';
+import GameManager from '../GameManager/GameManager.jsx';
 import './styles.css';
 
 const App = () => {
-  const socket = io('http://localhost:5001');
+  const [location, setLocation] = useState('');
+  const [roomName, setRoomName] = useState('');
+  const [restData, setRestData] = useState([]);
+
+  const value = {
+    location,
+    setLocation,
+    roomName,
+    setRoomName,
+    restData,
+    setRestData,
+  };
 
   return (
-    <Switch>
-      <Route exact path="/" component={Login} />
-      <Route path="/main" component={MainMenu} />
-      <Route path="/create" component={CreateRoom} />
-      <Route path="/prev" component={PrevRounds} />
-      <Route path="/wait" component={WaitingRoom} />
-    </Switch>
+    <div className="app">
+      <AppContext.Provider value={value}>
+        <Switch>
+          <Route exact path="/" component={Login} />
+          <Route path="/main" component={MainMenu} />
+          <Route path="/create" component={CreateRoom} />
+          <Route path="/prev" component={PrevRounds} />
+          <Route path="/wait" component={WaitingRoom} />
+          <Route path="/game" component={GameManager} />
+        </Switch>
+      </AppContext.Provider>
+    </div>
   );
 };
 
