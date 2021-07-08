@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AppContext } from '../../AppContext';
 
@@ -6,7 +6,7 @@ const CreateRoom = () => {
   const history = useHistory();
 
   const {
-    setLocation, setRoomName, location, roomName,
+    setLocation, setRoomName, setRoomId, location, roomName, roomId,
   } = useContext(AppContext);
   // const [location, setLocation] = useState('');
   // const [roomName, setRoomName] = useState('');
@@ -17,6 +17,12 @@ const CreateRoom = () => {
     medi: false,
     mexican: false,
   });
+
+  useEffect(() => {
+    if (roomId) {
+      history.push('/wait'.concat(`${roomId}`));
+    }
+  })
 
   const handleLocationChange = (e) => {
     setLocation(e.target.value);
@@ -37,9 +43,9 @@ const CreateRoom = () => {
   };
 
   const handleClick = () => {
-    const roomId = Math.random() * 100;
+    const roomVar = Math.random() * 100;
 
-    history.push(`/wait${Math.ceil(roomId)}`);
+    setRoomId(Math.ceil(roomVar));
   };
 
   return (

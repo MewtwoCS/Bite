@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
+import { AppContext } from '../../AppContext';
 
 const Login = () => {
   const history = useHistory();
-  const [username, setUsername] = useState('');
+  const { setUsernameVal, usernameVal } = useContext(AppContext);
   const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('')
+
+
+  useEffect(() => {
+    if (usernameVal) {
+      history.push('/main')
+    }
+  })
 
   const handleUserChange = (e) => {
     setUsername(e.target.value);
@@ -26,7 +35,7 @@ const Login = () => {
       }),
     })
       .then((data) => {
-        if (data.status === 200) history.push('/main');
+        if (data.status === 200) setUsernameVal(username);
       })
       .catch((err) => console.log('Error from POST request: ', err));
   };
