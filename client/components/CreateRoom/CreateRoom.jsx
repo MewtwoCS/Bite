@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { AppContext } from '../../AppContext';
 import { useHistory } from 'react-router-dom';
 
 const CreateRoom = () => {
   const history = useHistory();
-  const [location, setLocation] = useState('');
-  const [roomName, setRoomName] = useState('');
+
+  const { setLocation, setRoomName, location, roomName } =
+    useContext(AppContext);
+  // const [location, setLocation] = useState('');
+  // const [roomName, setRoomName] = useState('');
   const [preferences, setPreferences] = useState({
     fastFood: false,
     korean: false,
