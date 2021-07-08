@@ -1,0 +1,29 @@
+#game-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+#rest-info {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#restaurant-name {
+  font-size: 3rem;
+}
+
+#restaurant-price {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+#restaurant-img {
+  width: 400px;
+  height: 400px;
+}
