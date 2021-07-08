@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import { io } from 'socket.io-client';
+import { AppContext } from '../../AppContext';
 
 const MainMenu = () => {
   const history = useHistory();
@@ -9,12 +11,27 @@ const MainMenu = () => {
   const [room, setRoom] = useState('');
   const [joinIsOpen, setJoinIsOpen] = useState(false);
 
+  const { setRoomId, roomId } = useContext(AppContext);
+
+  
+  useEffect(() => {
+    if (roomId) {
+      history.push('/wait'.concat(`${room}`));
+    }
+  })
+  
+
+
   const handleRoomChange = (e) => {
     setRoom(e.target.value);
   };
 
   const toggleJoin = () => {
     setJoinIsOpen(!joinIsOpen);
+  };
+
+  const handleRoomJoin = (e) => {
+    setRoomId(room);
   };
 
   return (
@@ -42,7 +59,10 @@ const MainMenu = () => {
             onChange={handleRoomChange}
             variant="outlined"
           />
-          <Button disableElevation>Join</Button>
+          <Button
+          onClick={handleRoomJoin}
+          disableElevation
+          >Join</Button>
         </>
       )}
 

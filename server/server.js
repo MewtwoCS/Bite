@@ -4,6 +4,7 @@ const cors = require('cors');
 
 const app = express();
 const PORT = 5000;
+const server = require('http').Server(app);
 const socket = require('./socket/socket');
 const userRouter = require('./routes/userRouter');
 const yelpRouter = require('./routes/yelpRouter');
@@ -21,11 +22,12 @@ app.use('/room', roomRouter);
 app.use((err, req, res) => {
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
-    message: 'An error occurred',
+    status: 500,
+    message: { err: 'An error occurred' },
   };
   const errorObj = { ...defaultErr, ...err };
-  console.log(errorObj.log);
-  return res.status(500).json(errorObj.message);
+  console.log(errorObj.log, ' ', errorObj.err);
+  return res.status(errorObj.status).json(errorObj.message);
 });
 
 app.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
