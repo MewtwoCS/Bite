@@ -2,7 +2,7 @@
 const socket = {};
 
 socket.init = (PORT) => {
-  const io = require('socket.io')(5001, {
+  const io = require('socket.io')(PORT, {
     cors: {
       origin: ['http://localhost:8080'],
     },

@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 import React, { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { AppContext } from '../../AppContext';
@@ -32,8 +33,9 @@ const App = () => {
           <Route path="/main" component={MainMenu} />
           <Route path="/create" component={CreateRoom} />
           <Route path="/prev" component={PrevRounds} />
-          <Route path="/wait" component={WaitingRoom} />
+          {/* <Route path="/wait" component={WaitingRoom} /> */}
           <Route path="/game" component={GameManager} />
+          <Route path="/wait:roomId" component={WaitingRoom} />
         </Switch>
       </AppContext.Provider>
     </div>

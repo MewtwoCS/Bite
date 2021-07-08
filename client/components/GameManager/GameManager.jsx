@@ -1,37 +1,30 @@
 import React, { useState, useContext } from 'react';
 // import restaurants from '../../restaurants.json';
 import './styles.css';
-import AppContext from '../../AppContext';
+import { AppContext } from '../../AppContext';
 
 // Conditionally render this component based on start-button click in
 // WaitingRoom.
 
 // Pass in restaurants array as props.restaurants
-const GameManager = (props) => {
+const GameManager = () => {
   // console.log(JSON.parse(restaurants));
 
-  const {
-    setLocation,
-    setRoomName,
-    setRestData,
-    location,
-    roomName,
-    restData,
-  } = useContext(AppContext);
+  const { restData } = useContext(AppContext);
 
   const [currIndex, setCurrIndex] = useState(0);
-  const [restaurant, setRestaurant] = useState(props.restaurants?.[0]);
+  const [restaurant, setRestaurant] = useState(restData?.[0]);
 
   const handleClick = (e) => {
     console.log('CURRINDEXS: ', currIndex);
     if (e.target.id === 'next-button' && currIndex <= 10) {
       setCurrIndex((prev) => prev + 1);
-      // setRestaurant(props.restaurants[currIndex + 1]);
+      setRestaurant(restData[currIndex + 1]);
     }
 
     if (e.target.id === 'prev-button' && currIndex) {
       setCurrIndex((prev) => prev - 1);
-      // setRestaurant(props.restaurants[currIndex - 1]);
+      setRestaurant(restData[currIndex - 1]);
     }
   };
 
@@ -42,7 +35,8 @@ const GameManager = (props) => {
       </button>
       <img
         id="restaurant-img"
-        src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/assortment-of-colorful-ripe-tropical-fruits-top-royalty-free-image-995518546-1564092355.jpg"
+        src={restaurant?.image_url}
+        alt="restaurant"
       />
       <button id="next-button" onClick={handleClick}>
         {'>'}

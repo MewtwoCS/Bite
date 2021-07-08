@@ -1,12 +1,13 @@
 import React, { useState, useContext } from 'react';
-import { AppContext } from '../../AppContext';
 import { useHistory } from 'react-router-dom';
+import { AppContext } from '../../AppContext';
 
 const CreateRoom = () => {
   const history = useHistory();
 
-  const { setLocation, setRoomName, location, roomName } =
-    useContext(AppContext);
+  const {
+    setLocation, setRoomName, location, roomName,
+  } = useContext(AppContext);
   // const [location, setLocation] = useState('');
   // const [roomName, setRoomName] = useState('');
   const [preferences, setPreferences] = useState({
@@ -26,9 +27,8 @@ const CreateRoom = () => {
   };
 
   const handlePrefChange = (e) => {
-    const name = e.target.name;
-    const value =
-      e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    const { name } = e.target;
+    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
 
     setPreferences((prev) => ({
       ...prev,
@@ -37,12 +37,15 @@ const CreateRoom = () => {
   };
 
   const handleClick = () => {
-    history.push('/wait');
+    const roomId = Math.random() * 100;
+
+    history.push(`/wait${Math.ceil(roomId)}`);
   };
 
   return (
     <div>
-      Location:{' '}
+      Location:
+      {' '}
       <input
         id="location-input"
         type="text"
@@ -87,7 +90,8 @@ const CreateRoom = () => {
         />
         Mexican
       </fieldset>
-      Room Name:{' '}
+      Room Name:
+      {' '}
       <input type="text" value={roomName} onChange={handleRoomChange} />
       <button onClick={handleClick}>Create Room</button>
     </div>

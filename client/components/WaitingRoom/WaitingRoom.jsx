@@ -1,26 +1,28 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import { AppContext } from '../../AppContext';
 import { io } from 'socket.io-client';
+import { AppContext } from '../../AppContext';
 
 // ADD LOGIC TO BUTTON?
 
 const WaitingRoom = () => {
+  const history = useHistory();
   const {
-    setLocation,
-    setRoomName,
+    // setLocation,
+    // setRoomName,
     setRestData,
     location,
-    roomName,
+    // roomName,
     restData,
   } = useContext(AppContext);
 
   const handleClick = () => {
-    fetch('http://localhost:5000/yelp')
+    fetch('http://localhost:5000/yelp/Koreatown')
       .then((res) => res.json())
       .then((data) => {
-        console.log('resJSON', data);
+        // console.log('resJSON', data);
         setRestData(data);
+        console.log(restData);
       });
 
     const socket = io('http://localhost:5001');
@@ -34,6 +36,7 @@ const WaitingRoom = () => {
 
   return (
     <div id="waiting-container">
+      <div>{location}</div>
       <div className="waiting-room-pane">User1</div>
       <div className="waiting-room-pane">User2</div>
       <div className="waiting-room-pane">User3</div>
