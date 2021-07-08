@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const socket = {};
 
 socket.init = (PORT) => {
