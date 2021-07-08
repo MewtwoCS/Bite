@@ -47,6 +47,7 @@ module.exports = (env) => {
       proxy: {
         '/api': 'http://localhost:5000',
       },
+      historyApiFallback: true,
     },
   };
 };
