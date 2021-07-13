@@ -1,0 +1,48 @@
+#create-container {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+#location-input {
+	display: flex;
+	align-items: center;
+	background-color: rgb(255, 255, 255);
+	border: thin solid black;
+	border-radius: 1rem;
+	padding: 0.5rem;
+}
+
+#location-input * {
+	margin-left: 0.3rem;
+}
+
+#preferences {
+	width: fit-content;
+	background-color: rgb(255, 255, 255);
+	margin-bottom: 1.5rem;
+}
+
+.create {
+	margin: 1rem;
+}
+
+legend {
+	font-size: large;
+	font-weight: bolder;
+}
+
+@keyframes scale-in-center {
+	0% {
+		transform: scale(0);
+		opacity: 1;
+	}
+	100% {
+		transform: scale(1);
+		opacity: 1;
+	}
+}
