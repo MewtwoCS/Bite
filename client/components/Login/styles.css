@@ -1,0 +1,49 @@
+body {
+	background-color: rgb(236, 146, 146);
+}
+
+#login-container {
+	width: 100vw;
+	height: 90vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+#login-pane {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 20rem;
+	background-color: whitesmoke;
+	padding: 1rem 1rem 2rem 1rem;
+	border-radius: 1rem;
+	border: thin solid black;
+}
+
+.login-buttons {
+	align-self: flex-end;
+}
+
+#signup-button,
+#login-button {
+	margin-top: 1rem;
+}
+
+#login-img {
+	/* position: absolute; */
+	width: 139px;
+	height: 139px;
+}
+
+@keyframes scale-in-center {
+	0% {
+		transform: scale(0);
+		opacity: 1;
+	}
+	100% {
+		transform: scale(1);
+		opacity: 1;
+	}
+}

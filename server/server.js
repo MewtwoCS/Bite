@@ -20,14 +20,14 @@ app.use('/yelp', yelpRouter);
 app.use('/room', roomRouter);
 
 app.use((err, req, res) => {
-  const defaultErr = {
-    log: 'Express error handler caught unknown middleware error',
-    status: 500,
-    message: { err: 'An error occurred' },
-  };
-  const errorObj = { ...defaultErr, ...err };
-  console.log(errorObj.log, ' ', errorObj.err);
-  return res.status(errorObj.status).json(errorObj.message);
+	const defaultErr = {
+		log: 'Express error handler caught unknown middleware error',
+		status: 500,
+		message: { err: 'An error occurred' },
+	};
+	const errorObj = { ...defaultErr, ...err };
+	console.log(errorObj.log, ' ', errorObj.err);
+	return res.status(errorObj.status).json(errorObj.message);
 });
 
 app.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));

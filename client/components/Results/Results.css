@@ -1,0 +1,65 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+
+#results-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+	animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+#result-items {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#restaurant-img {
+	width: 400px;
+	height: 400px;
+	border: 0.5rem double white;
+}
+
+#winner-name {
+	font-size: 3rem;
+}
+
+#restaurant-options {
+	font-size: 1.2rem;
+	font-weight: 800;
+}
+
+#restaurant-phone {
+	font-size: 1.2rem;
+	font-weight: 800;
+}
+
+#winner-img {
+	width: 300px;
+	height: 300px;
+}
+
+#secondary-text {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+@keyframes scale-in-center {
+	0% {
+		transform: scale(0);
+		opacity: 1;
+	}
+	100% {
+		transform: scale(1);
+		opacity: 1;
+	}
+}

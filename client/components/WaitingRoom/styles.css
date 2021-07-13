@@ -1,0 +1,41 @@
+#waiting-container {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+#wait-players,
+#wait-location {
+	margin: 2rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	border: thin solid black;
+	padding: 1.5rem;
+	background-color: whitesmoke;
+	border-radius: 1rem;
+}
+
+#wait-players span,
+#wait-location span {
+	margin-bottom: 1rem;
+}
+
+#wait-players b,
+#wait-location b {
+	border-bottom: thin solid black;
+}
+
+@keyframes scale-in-center {
+	0% {
+		transform: scale(0);
+		opacity: 1;
+	}
+	100% {
+		transform: scale(1);
+		opacity: 1;
+	}
+}

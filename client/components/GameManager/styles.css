@@ -1,29 +1,98 @@
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+
 #game-container {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-color: rgb(255, 160, 160);
+}
+
+#game-container * {
+	margin: 1rem;
 }
 
 #rest-info {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#rest-info * {
+	margin: 1rem;
+}
+
+#rest-info #restaurant-name {
+	border: 0.4rem solid black;
+	background-color: white;
+	border-radius: 2rem;
+	padding: 0.7rem;
 }
 
 #restaurant-name {
-  font-size: 3rem;
+	font-size: 3rem;
+	animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
 #restaurant-price {
-  font-size: 2rem;
-  font-weight: bold;
+	font-size: 2rem;
+	font-weight: bold;
+	color: white;
+	border: 0.3rem solid black;
+	background-color: black;
+	border-radius: 0.9rem;
+	padding: 0 0.5rem;
+	animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
 #restaurant-img {
-  width: 400px;
-  height: 400px;
+	width: 400px;
+	height: 400px;
+	border: 0.5rem double white;
+	animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+#restaurant-options {
+	font-size: 1.2rem;
+	font-weight: 800;
+	animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+#yesnobuttons {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+	transition: transform 250ms;
+}
+
+.btn {
+	max-width: 100px;
+	animation: scale-in-center 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+	transition: transform 250ms;
+}
+
+.btn:hover {
+	transform: scale(1.1);
+}
+
+@keyframes scale-in-center {
+	0% {
+		transform: scale(0);
+		opacity: 1;
+	}
+	100% {
+		transform: scale(1);
+		opacity: 1;
+	}
 }

@@ -11,60 +11,61 @@ import PrevRounds from '../PrevRounds/PrevRounds.jsx';
 import WaitingRoom from '../WaitingRoom/WaitingRoom.jsx';
 import GameManager from '../GameManager/GameManager.jsx';
 import Purgatory from '../Purgatory/Purgatory.jsx';
-import Results from '../Results/Results.jsx'
+import Results from '../Results/Results.jsx';
 import './styles.css';
 
 const App = () => {
-  const [location, setLocation] = useState('');
-  const [roomName, setRoomName] = useState('');
-  const [restData, setRestData] = useState([]);
-  const [roomId, setRoomId] = useState(null);
-  const [usernameVal, setUsernameVal] = useState('');
-  const [results, setResults] = useState([]);
+	const [location, setLocation] = useState('');
+	const [roomName, setRoomName] = useState('');
+	const [restData, setRestData] = useState([]);
+	const [roomId, setRoomId] = useState(null);
+	const [usernameVal, setUsernameVal] = useState('');
+	const [results, setResults] = useState([]);
+	const [isHost, setIsHost] = useState(false);
 
-  const value = {
-    location,
-    setLocation,
-    roomName,
-    setRoomName,
-    restData,
-    setRestData,
-    roomId,
-    setRoomId,
-    usernameVal,
-    setUsernameVal,
-    results,
-    setResults,
-  };
+	const value = {
+		location,
+		setLocation,
+		roomName,
+		setRoomName,
+		restData,
+		setRestData,
+		roomId,
+		setRoomId,
+		usernameVal,
+		setUsernameVal,
+		results,
+		setResults,
+		isHost,
+		setIsHost,
+	};
 
-  let waitingRoom = '';
-  
+	let waitingRoom = '';
 
-  // if (roomId) {
-  //     waitingRoom = <Route path="/wait:roomId" component={WaitingRoom} />
-  // } else {
-  //     waitingRoom = <Route path="/create" component={CreateRoom} />
-  // }
-  
+	// if (roomId) {
+	//     waitingRoom = <Route path="/wait:roomId" component={WaitingRoom} />
+	// } else {
+	//     waitingRoom = <Route path="/create" component={CreateRoom} />
+	// }
 
-  return (
-    <div className="app">
-      <AppContext.Provider value={value}>
-        <SocketContext.Provider value={socket}>
-          <Switch>
-            <Route exact path="/" component={Login} />
-            <Route path="/main" component={MainMenu} />
-            <Route path="/create" component={CreateRoom} />
-            <Route path="/prev" component={PrevRounds} />
-            <Route path="/game" component={GameManager} />
-            <Route path="/wait:roomId" component={WaitingRoom} />
-            <Route path='/purg' component={Purgatory} />
-            <Route path='/results' component={Results} />
-          </Switch>
-        </SocketContext.Provider>
-      </AppContext.Provider>
-    </div>
-  );
+	return (
+		<div className='app'>
+			<AppContext.Provider value={value}>
+				<SocketContext.Provider value={socket}>
+					<Switch>
+						<Route exact path='/' component={Login} />
+						<Route path='/main' component={MainMenu} />
+						<Route path='/create' component={CreateRoom} />
+						<Route path='/prev' component={PrevRounds} />
+						<Route path='/game' component={GameManager} />
+						<Route path='/wait:roomId' component={WaitingRoom} />
+						<Route path='/purg' component={Purgatory} />
+						<Route path='/results' component={Results} />
+					</Switch>
+				</SocketContext.Provider>
+			</AppContext.Provider>
+		</div>
+	);
 };
 
 export default App;

@@ -1,6 +1,4 @@
-import React, {
-  useState, useEffect, useContext, useCallback,
-} from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 // import restaurants from '../../restaurants.json';
 import { useHistory } from 'react-router-dom';
 import './styles.css';
@@ -12,101 +10,81 @@ import { SocketContext } from '../../SocketContext';
 
 // Pass in restaurants array as props.restaurants
 const GameManager = () => {
-  const history = useHistory();
-  const {
-    roomId,
-    restData,
-    usernameVal,
-    setResults,
-  } = useContext(AppContext);
-  const socket = useContext(SocketContext);
+	const history = useHistory();
+	const { roomId, restData, usernameVal, setResults } = useContext(AppContext);
+	const socket = useContext(SocketContext);
 
-  const handleInviteAccepted = useCallback(() => {
-    setJoined(true);
-  }, []);
+	const [currIndex, setCurrIndex] = useState(0);
+	const [restaurant, setRestaurant] = useState(restData?.[0]);
+	const [voteArr, setVoteArr] = useState([]);
 
-  // console.log(JSON.parse(restaurants));
+	useEffect(() => {}, []);
 
-  /*
-    0:
-alias: "slurpin-ramen-bar-los-angeles-los-angeles"
-categories: (2) [{…}, {…}]
-coordinates: {latitude: 34.0573614429986, longitude: -118.306769744705}
-display_phone: "(213) 388-8607"
-distance: 701.9702959148651
-id: "MlmcOkwaNnxl3Zuk6HsPCQ"
-image_url: "https://s3-media2.fl.yelpcdn.com/bphoto/axO_FH4VwDYcPQOuabFi6g/o.jpg"
-is_closed: false
-location: {address1: "3500 W 8th St", address2: null, address3: "", city: "Los Angeles", zip_code: "90005", …}
-name: "Slurpin' Ramen Bar - Los Angeles"
-phone: "+12133888607"
-price: "$$"
-rating: 4.5
-review_count: 4731
-transactions: (2) ["delivery", "pickup"]
-  */
+	if (!restaurant) {
+		socket.emit('submit-vote', 'room'.concat(` ${roomId}`), socket.id, voteArr);
+		socket.on('submitted', (voter) => {
+			console.log(voter.username, 'has finished voting');
+			if (voter.username === usernameVal) history.push('/purg');
+		});
+		return <div>Loading...</div>;
+	}
+	socket.on('all-votes-in', (allVotes) => {
+		console.log('VOTING COMPLETE:', allVotes);
+		setResults(allVotes);
+		history.push('/results');
+	});
 
-  const [currIndex, setCurrIndex] = useState(0);
-  const [restaurant, setRestaurant] = useState(restData?.[0]);
-  const [voteArr, setVoteArr] = useState([]);
+	const handleVote = (e) => {
+		console.log('CURRINDEXS: ', currIndex);
+		if (e.target.id === 'yes-button' && currIndex < 10) {
+			console.log('in yes');
+			setVoteArr([...voteArr, 1]);
+		} else if (e.target.id === 'no-button' && currIndex < 10) {
+			console.log('in no');
+			setVoteArr([...voteArr, 0]);
+		}
 
-  useEffect(() => {
-    if (currIndex >= restData.length - 1) {
-      socket.emit('submit-vote', 'room'.concat(` ${roomId}`), socket.id, voteArr);
-    }
-    socket.on('submitted', (voter) => {
-      console.log(voter.username, 'has finished voting');
-      if (voter.username === usernameVal) history.push('/purg');
-    });
-  });
+		if (currIndex < 10) {
+			setRestaurant(restData[currIndex + 1]);
+			setCurrIndex(currIndex + 1);
+		}
+	};
 
-  socket.on('all-votes-in', (allVotes) => {
-    console.log('VOTING COMPLETE:', allVotes);
-    setResults(allVotes);
-    history.push('/results');
-  });
+	const { transactions } = restaurant;
+	return (
+		<div id='game-container'>
+			<div id='rest-info'>
+				<img id='restaurant-img' src={restaurant?.image_url} alt='restaurant' />
+				<div id='restaurant-name'>{restaurant?.name}</div>
+				<div id='restaurant-price'>{restaurant?.price}</div>
 
-  const handleVote = (e) => {
-    console.log('CURRINDEXS: ', currIndex);
-    if (e.target.id === 'next-button' && currIndex < 9) {
-      console.log('in yes');
-      setVoteArr([...voteArr, 1]);
-    } else if (e.target.id === 'prev-button' && currIndex < 9) {
-      console.log('in no');
-      setVoteArr([...voteArr, 0]);
-    }
-
-    if (currIndex < 9) {
-      setCurrIndex(currIndex + 1);
-      setRestaurant(restData[currIndex]);
-    }
-  };
-
-  console.log('vote array', voteArr);
-
-  const { transactions } = restaurant;
-  return (
-    <div id="game-container">
-      <button id="prev-button" onClick={handleVote}>
-        X
-      </button>
-      <div id="rest-info">
-        <img
-          id="restaurant-img"
-          src={restaurant?.image_url}
-          alt="restaurant"
-        />
-        <div id="restaurant-name">{restaurant?.name}</div>
-        <div id="restaurant-price">{restaurant?.price}</div>
-        {'Available for '}
-        {transactions?.[0] !== undefined && transactions[0].toUpperCase()}
-        {transactions?.[1] !== undefined && ` & ${transactions[1].toUpperCase()}`}
-      </div>
-      <button id="next-button" onClick={handleVote}>
-        O
-      </button>
-    </div>
-  );
+				<div id='restaurant-options'>
+					{'Available for '}
+					{transactions?.[0] !== undefined && transactions[0].toUpperCase()}
+					{transactions?.[1] !== undefined &&
+						` & ${transactions[1].toUpperCase()}`}
+				</div>
+				<div id='yesnobuttons'>
+					<input
+						type='image'
+						src='https://i.ibb.co/v4x3F44/bluex.png'
+						name='nay'
+						className='btn'
+						id='no-button'
+						onClick={handleVote}
+					/>
+					<input
+						type='image'
+						src='https://i.ibb.co/9HMMN3s/redheart.png'
+						name='yay'
+						className='btn'
+						id='yes-button'
+						onClick={handleVote}
+					/>
+				</div>
+			</div>
+		</div>
+	);
 };
 
 export default GameManager;
